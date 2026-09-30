@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Prisca & Fadi — Save the Date</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Montserrat:wght@400;500;600&display=swap');
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #e9e2d7;
+      color: #4c463f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .page {
+      width: min(100%, 430px);
+      min-height: 100vh;
+      padding: 28px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      width: 100%;
+      background: #f8f5ef;
+      padding: 24px 20px 28px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 14px 40px rgba(60,50,40,.12);
+      overflow: hidden;
+    }
+
+    .frame {
+      border: 1px solid rgba(115,102,87,.35);
+      padding: 24px 18px 26px;
+      position: relative;
+    }
+
+    .frame::before, .frame::after {
+      content: "❧";
+      position: absolute;
+      color: #a99b88;
+      font-size: 22px;
+      line-height: 1;
+    }
+    .frame::before { top: -10px; left: 12px; transform: rotate(-35deg); }
+    .frame::after { bottom: -10px; right: 12px; transform: rotate(145deg); }
+
+    .eyebrow {
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 18px;
+      letter-spacing: 1.8px;
+      margin-bottom: 5px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 42px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .date {
+      margin: 10px 0 18px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 17px;
+      letter-spacing: 2.5px;
+    }
+
+    .photo-wrap {
+      width: min(100%, 315px);
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 50%;
+      border: 5px solid #f8f5ef;
+      box-shadow: 0 4px 14px rgba(0,0,0,.10);
+      background: #ddd;
+    }
+
+    .photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #scratchCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    .scratch-hint {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      color: #6b6258;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 22px;
+      text-shadow: 0 1px 2px rgba(255,255,255,.7);
+    }
+
+    .revealed .scratch-hint { opacity: 0; }
+
+    .countdown-title {
+      margin-top: 22px;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 18px;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin-top: 8px;
+    }
+
+    .countdown strong {
+      display: block;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 25px;
+      font-weight: 500;
+    }
+
+    .countdown span {
+      font-size: 8px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 15px;
+      font-style: italic;
+    }
+
+    .hidden-before-reveal {
+      opacity: 0;
+      transform: translateY(5px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .card.revealed .hidden-before-reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 360px) {
+      h1 { font-size: 36px; }
+      .photo-wrap { max-width: 270px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="card" id="card">
+      <div class="frame">
+        <div class="eyebrow">We are getting married</div>
+        <h1>Prisca &amp; Fadi</h1>
+        <div class="date">25 JULY 2027</div>
+
+        <div class="photo-wrap" id="photoWrap">
+          <!-- Replace photo.jpg with your wedding/engagement photo -->
+          <img class="photo" src="photo.jpg" alt="Prisca and Fadi">
+
+          <canvas id="scratchCanvas"></canvas>
+          <div class="scratch-hint">Scratch to reveal ♡</div>
+        </div>
+
+        <div class="hidden-before-reveal">
+          <div class="countdown-title">Counting down to our day...</div>
+
+          <div class="countdown" aria-label="Countdown">
+            <div><strong id="days">0</strong><span>Days</span></div>
+            <div><strong id="hours">0</strong><span>Hours</span></div>
+            <div><strong id="minutes">0</strong><span>Minutes</span></div>
+            <div><strong id="seconds">0</strong><span>Seconds</span></div>
+          </div>
+
+          <div class="footer">Save the date — we can't wait to celebrate with you.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ==========================================================
+    // 1. COUNTDOWN
+    // ==========================================================
+    // Wedding date: 25 July 2027 at midnight in France (+02:00).
+    const weddingDate = new Date("2027-07-25T00:00:00+02:00");
+
+    function updateCountdown() {
+      const now = new Date();
+      let diff = weddingDate - now;
+
+      if (diff <= 0) {
+        diff = 0;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+      document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ==========================================================
+    // 2. SCRATCH-OFF EFFECT
+    // ==========================================================
+    const canvas = document.getElementById("scratchCanvas");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    const photoWrap = document.getElementById("photoWrap");
+    const card = document.getElementById("card");
+
+    let drawing = false;
+    let revealed = false;
+
+    function setupCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Elegant "silver/ivory card" scratch surface
+      const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
+      gradient.addColorStop(0, "#eee9df");
+      gradient.addColorStop(.5, "#d8d0c3");
+      gradient.addColorStop(1, "#f2ede5");
+
+      ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, rect.width, rect.height);
+
+      // Subtle decorative texture
+      ctx.globalAlpha = .10;
+      for (let i = 0; i < 1800; i++) {
+        const x = Math.random() * rect.width;
+        const y = Math.random() * rect.height;
+        ctx.fillStyle = i % 2 ? "#ffffff" : "#6f665b";
+        ctx.fillRect(x, y, 1, 1);
+      }
+      ctx.globalAlpha = 1;
+
+      ctx.fillStyle = "rgba(90,80,70,.70)";
+      ctx.font = 'italic 22px "Cormorant Garamond", serif';
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("SCRATCH TO REVEAL", rect.width / 2, rect.height / 2);
+
+      ctx.globalCompositeOperation = "destination-out";
+    }
+
+    function pointFromEvent(event) {
+      const rect = canvas.getBoundingClientRect();
+      let clientX, clientY;
+
+      if (event.touches && event.touches.length) {
+        clientX = event.touches[0].clientX;
+        clientY = event.touches[0].clientY;
+      } else {
+        clientX = event.clientX;
+        clientY = event.clientY;
+      }
+
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function scratch(event) {
+      if (revealed) return;
+
+      const p = pointFromEvent(event);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 25, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Check every few strokes whether enough has been scratched.
+      if (Math.random() < 0.12) checkReveal();
+    }
+
+    function checkReveal() {
+      const w = canvas.width;
+      const h = canvas.height;
+      const data = ctx.getImageData(0, 0, w, h).data;
+
+      let transparent = 0;
+      const step = 12; // faster check on phones
+
+      for (let i = 3; i < data.length; i += 4 * step) {
+        if (data[i] < 80) transparent++;
+      }
+
+      const totalSamples = Math.ceil(data.length / (4 * step));
+      const percent = transparent / totalSamples;
+
+      // Reveal automatically after roughly 55% is scratched.
+      if (percent > 0.55) revealAll();
+    }
+
+    function revealAll() {
+      if (revealed) return;
+      revealed = true;
+      card.classList.add("revealed");
+
+      canvas.style.transition = "opacity .7s ease";
+      canvas.style.opacity = "0";
+
+      setTimeout(() => {
+        canvas.style.display = "none";
+      }, 750);
+    }
+
+    canvas.addEventListener("pointerdown", (e) => {
+      drawing = true;
+      canvas.setPointerCapture(e.pointerId);
+      scratch(e);
+    });
+
+    canvas.addEventListener("pointermove", (e) => {
+      if (!drawing) return;
+      scratch(e);
+    });
+
+    canvas.addEventListener("pointerup", () => {
+      drawing = false;
+      checkReveal();
+    });
+
+    canvas.addEventListener("pointercancel", () => {
+      drawing = false;
+    });
+
+    window.addEventListener("resize", () => {
+      if (!revealed) setupCanvas();
+    });
+
+    setupCanvas();
+  </script>
+</body>
+</html>
