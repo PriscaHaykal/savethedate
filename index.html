@@ -6,39 +6,52 @@
 <title>Prisca & Fady — Save the Date</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
-:root{--bg1:#d9e5f6;--bg2:#eff4fb;--ink:#47536a;--soft:#8995ab;--line:#fff}
+:root{--ivory1:#fffdf8;--ivory2:#f7f3e9;--sage:#5f7a64;--sage-soft:#8ea591;--line:#c9d6c7}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;overflow:hidden;background:#cfdcef}
-body{display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;color:var(--ink)}
-/* Card: 62:100 ratio, always fully visible on screen */
+html,body{margin:0;height:100%;overflow:hidden;background:#e7e3d8}
+body{display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;color:var(--sage)}
 .card{position:relative;container-type:inline-size;aspect-ratio:62/100;
   width:min(100vw,460px,calc(100dvh*.62));
-  background:linear-gradient(165deg,var(--bg1),var(--bg2) 48%,#e1eaf7);overflow:hidden}
-/* Embossed double border with notched corners */
-.border{position:absolute;inset:0;width:100%;height:100%;z-index:6;pointer-events:none;
-  filter:drop-shadow(.25px .35px .25px rgba(95,115,150,.35)) drop-shadow(-.2px -.25px .15px rgba(255,255,255,.9))}
-.border path{fill:none;stroke:var(--line);stroke-width:.35}
-.content{position:absolute;inset:0;padding:14cqw 14cqw 13cqw;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center}
-.sprig{width:7cqw;height:7cqw;stroke:#9aa7bf;fill:none;stroke-width:1.1;stroke-linecap:round}
-.eyebrow{font-size:2.7cqw;letter-spacing:.95cqw;text-transform:uppercase;color:var(--soft);line-height:1.7;margin-top:2cqw;padding-left:.95cqw}
-.names{font-family:"Playfair Display",serif;font-style:italic;font-weight:400;font-size:9cqw;line-height:1.1;margin:1.5cqw 0 0;color:var(--ink);white-space:nowrap}
-.date{font-size:3cqw;letter-spacing:.8cqw;text-transform:uppercase;color:var(--soft);margin-top:2.2cqw;padding-left:.8cqw}
-.photo{width:56cqw;height:44cqw;border-radius:50%;overflow:hidden;border:.9cqw solid #fff;box-shadow:0 1.5cqw 6cqw rgba(80,100,140,.25),0 0 0 .3cqw rgba(160,175,205,.5);background:#c9d5ea}
+  background:#faf6ed;overflow:hidden}
+.layer{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.border{z-index:6;filter:drop-shadow(.25px .35px .3px rgba(150,135,110,.4)) drop-shadow(-.2px -.25px .15px rgba(255,255,255,1))}
+.border path{fill:none;stroke:#fff;stroke-width:.5}
+.fl{position:absolute;z-index:7;pointer-events:none;display:block}
+.fl-tl{left:0;top:0;width:44cqw}
+.fl-br{right:-2cqw;bottom:-2cqw;width:38cqw}
+.content{position:absolute;inset:0;z-index:2;padding:14cqw 15cqw 13cqw;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center}
+.sprig{width:7cqw;height:7cqw;stroke:var(--sage-soft);fill:none;stroke-width:1.1;stroke-linecap:round}
+.eyebrow{font-size:2.7cqw;letter-spacing:.95cqw;text-transform:uppercase;color:var(--sage-soft);line-height:1.7;margin-top:2cqw;padding-left:.95cqw}
+.names{font-family:"Playfair Display",serif;font-style:italic;font-weight:400;font-size:9cqw;line-height:1.1;margin:1.5cqw 0 0;color:var(--sage);white-space:nowrap}
+.date{font-size:3cqw;letter-spacing:.8cqw;text-transform:uppercase;color:var(--sage-soft);margin-top:2.2cqw;padding-left:.8cqw}
+/* Photo oval = the only scratch area */
+.photo{position:relative;width:62cqw;height:48cqw;border-radius:50%;overflow:hidden;border:.9cqw solid #fff;
+  box-shadow:0 0 0 .35cqw #a9bda9,0 1.5cqw 6cqw rgba(95,122,100,.22);background:#e9eee6}
 .photo img{width:100%;height:100%;object-fit:cover;display:block}
+#scratch{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;transition:opacity .9s ease}
 .count{display:grid;grid-template-columns:repeat(4,1fr);width:72cqw}
-.count div+div{border-left:.25cqw solid rgba(137,149,171,.45)}
-.count strong{display:block;font-family:"Playfair Display",serif;font-style:italic;font-weight:400;font-size:6.6cqw;line-height:1.2;color:var(--ink)}
-.count span{font-size:1.9cqw;letter-spacing:.5cqw;text-transform:uppercase;color:var(--soft)}
-.footer{font-style:italic;font-size:2.9cqw;color:var(--soft)}
-.lang{position:absolute;z-index:8;top:11.5cqw;right:12.5cqw;font-size:2.5cqw;letter-spacing:.4cqw;color:var(--soft)}
+.count div+div{border-left:.25cqw solid rgba(142,165,145,.5)}
+.count strong{display:block;font-family:"Playfair Display",serif;font-style:italic;font-weight:400;font-size:6.6cqw;line-height:1.2;color:var(--sage)}
+.count span{font-size:1.9cqw;letter-spacing:.5cqw;text-transform:uppercase;color:var(--sage-soft)}
+.footer{font-style:italic;font-size:2.9cqw;color:var(--sage-soft);max-width:48cqw}
+.lang{position:absolute;z-index:8;top:11.5cqw;right:12.5cqw;font-size:2.5cqw;letter-spacing:.4cqw;color:var(--sage-soft)}
 .lang button{all:unset;cursor:pointer;padding:.8cqw .5cqw}
-.lang button.on{color:var(--ink);border-bottom:.2cqw solid var(--ink)}
-#scratch{position:absolute;left:11%;top:7%;width:78%;height:86%;z-index:5;touch-action:none;cursor:crosshair;transition:opacity .9s ease}
+.lang button.on{color:var(--sage);border-bottom:.2cqw solid var(--sage)}
+/* Cascade: texts stay hidden until the photo is revealed */
+.eyebrow,.names,.date,.count,.footer{opacity:0;transform:translateY(12px);transition:opacity 1s ease,transform 1s ease}
+.card.show .eyebrow,.card.show .names,.card.show .date,.card.show .count,.card.show .footer{opacity:1;transform:none}
+.card.show .eyebrow{transition-delay:.3s}
+.card.show .names{transition-delay:1.3s}
+.card.show .date{transition-delay:2.3s}
+.card.show .count{transition-delay:3.3s}
+.card.show .footer{transition-delay:4.3s}
 #confetti{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:9}
 </style>
 </head>
 <body>
 <section class="card" id="card">
+  <img class="fl fl-tl" src="flowers-tl.png" alt="">
+  <img class="fl fl-br" src="flowers-br.png" alt="">
   <div class="content">
     <div>
       <svg class="sprig" viewBox="0 0 24 24"><path d="M12 22V9M12 14c-4 0-6-2-6-5 4 0 6 2 6 5zM12 14c4 0 6-2 6-5-4 0-6 2-6 5zM12 9c-2-1-2-4 0-6 2 2 2 5 0 6z"/></svg>
@@ -46,7 +59,7 @@ body{display:flex;align-items:center;justify-content:center;font-family:"Cormora
       <h1 class="names">Prisca &amp; Fady</h1>
       <div class="date" data-en="25 July 2027" data-fr="25 juillet 2027"></div>
     </div>
-    <div class="photo"><img src="photo.png" alt="Prisca &amp; Fady"></div>
+    <div class="photo" id="photo"><img src="photo.png" alt="Prisca &amp; Fady"><canvas id="scratch"></canvas></div>
     <div class="count">
       <div><strong id="d">0</strong><span data-en="Days" data-fr="Jours"></span></div>
       <div><strong id="h">00</strong><span data-en="Hours" data-fr="Heures"></span></div>
@@ -56,20 +69,16 @@ body{display:flex;align-items:center;justify-content:center;font-family:"Cormora
     <div class="footer" data-en="We can't wait to celebrate with you." data-fr="Nous avons hâte de fêter ça avec vous."></div>
   </div>
   <div class="lang"><button class="on" data-l="en">EN</button> / <button data-l="fr">FR</button></div>
-  <canvas id="scratch"></canvas>
-  <svg class="border" viewBox="0 0 62 100" preserveAspectRatio="none" aria-hidden="true">
-    <path id="b1"/><path id="b2"/>
-  </svg>
+  <svg class="layer border" viewBox="0 0 62 100" preserveAspectRatio="none" aria-hidden="true"><path id="b1"/><path id="b2"/></svg>
   <canvas id="confetti"></canvas>
 </section>
 <script>
-/* Border with concave (notched) corners */
+/* Border with notched corners */
 function notch(m,r){const R=62-m,B=100-m;return `M${m+r} ${m}H${R-r}A${r} ${r} 0 0 0 ${R} ${m+r}V${B-r}A${r} ${r} 0 0 0 ${R-r} ${B}H${m+r}A${r} ${r} 0 0 0 ${m} ${B-r}V${m+r}A${r} ${r} 0 0 0 ${m+r} ${m}Z`}
 b1.setAttribute('d',notch(3,4.5));b2.setAttribute('d',notch(5.4,3.2));
 
 /* Language */
-let lang='en';
-function setLang(l){lang=l;document.documentElement.lang=l;
+function setLang(l){document.documentElement.lang=l;
   document.querySelectorAll('[data-en]').forEach(e=>e.innerHTML=e.dataset[l]);
   document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===l))}
 document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
@@ -82,31 +91,32 @@ d.textContent=Math.floor(t/86400);h.textContent=String(Math.floor(t%86400/3600))
 m.textContent=String(Math.floor(t%3600/60)).padStart(2,'0');s.textContent=String(t%60).padStart(2,'0')}
 tick();setInterval(tick,1000);
 
-/* Scratch */
-const cv=document.getElementById('scratch'),ctx=cv.getContext('2d',{willReadFrequently:true}),card=document.getElementById('card');
+/* Scratch: only on the photo oval */
+const cv=document.getElementById('scratch'),ctx=cv.getContext('2d',{willReadFrequently:true});
 let drawing=false,done=false,base=1,last=0,W=0,H=0;
-function count(){const a=ctx.getImageData(0,0,cv.width,cv.height).data;let n=0;for(let i=3;i<a.length;i+=40)if(a[i]>128)n++;return n||1}
+function count(){const a=ctx.getImageData(0,0,cv.width,cv.height).data;let n=0;for(let i=3;i<a.length;i+=24)if(a[i]>128)n++;return n||1}
 function setup(){
   const r=cv.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;
   cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
   ctx.globalCompositeOperation='source-over';ctx.clearRect(0,0,W,H);
+  ctx.save();ctx.beginPath();ctx.ellipse(W/2,H/2,W/2,H/2,0,0,Math.PI*2);ctx.clip();
   const g=ctx.createLinearGradient(0,0,W,H);
-  g.addColorStop(0,'#c7d6ee');g.addColorStop(.4,'#e7eef9');g.addColorStop(.7,'#cfdcf0');g.addColorStop(1,'#dfe8f6');
-  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.globalAlpha=.22;
-  for(let i=0;i<3200;i++){ctx.fillStyle=i%3===0?'#ffffff':i%3===1?'#9fb2d3':'#c9a24a';ctx.fillRect(Math.random()*W,Math.random()*H,1.3,1.3)}
-  ctx.globalAlpha=1;
-  ctx.strokeStyle='rgba(201,162,74,.8)';ctx.lineWidth=1;ctx.strokeRect(10,10,W-20,H-20);
-  ctx.fillStyle='rgba(71,83,106,.85)';ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.font='italic '+(W*.11)+'px "Playfair Display",serif';
-  ctx.fillText('SCRATCH',W/2,H/2-W*.09);ctx.fillText('TO REVEAL',W/2,H/2+W*.05);
-  ctx.font=(W*.1)+'px serif';ctx.fillStyle='rgba(201,162,74,.95)';ctx.fillText('♡',W/2,H/2+W*.22);
+  g.addColorStop(0,'#ffffff');g.addColorStop(.4,'#f3f6f1');g.addColorStop(.7,'#f9ecea');g.addColorStop(1,'#f6f7f2');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.globalAlpha=.18;
+  for(let i=0;i<2200;i++){ctx.fillStyle=i%3===0?'#ffffff':i%3===1?'#a9bda9':'#d9c58b';ctx.fillRect(Math.random()*W,Math.random()*H,1.3,1.3)}
+  ctx.globalAlpha=1;ctx.restore();
+  ctx.strokeStyle='rgba(201,162,74,.95)';ctx.lineWidth=1.4;ctx.beginPath();ctx.ellipse(W/2,H/2,W/2-7,H/2-7,0,0,Math.PI*2);ctx.stroke();
+  ctx.fillStyle='rgba(70,95,76,.9)';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font='italic '+(W*.105)+'px "Playfair Display",serif';
+  ctx.fillText('SCRATCH',W/2,H/2-W*.09);ctx.fillText('TO REVEAL',W/2,H/2+W*.035);
+  ctx.font=(W*.085)+'px serif';ctx.fillStyle='rgba(201,162,74,1)';ctx.fillText('♡',W/2,H/2+W*.17);
   base=count();ctx.globalCompositeOperation='destination-out';
 }
-function measure(){if(!done&&1-count()/base>.5)finish()}
+function measure(){if(!done&&1-count()/base>.55)finish()}
 function scratch(e){if(done)return;const r=cv.getBoundingClientRect();
-  ctx.beginPath();ctx.arc(e.clientX-r.left,e.clientY-r.top,W*.085,0,Math.PI*2);ctx.fill();
-  const t=performance.now();if(t-last>120){last=t;measure()}}
-function finish(){done=true;cv.style.opacity='0';cv.style.pointerEvents='none';goldConfetti();setTimeout(()=>cv.remove(),950)}
+  ctx.beginPath();ctx.arc(e.clientX-r.left,e.clientY-r.top,W*.09,0,Math.PI*2);ctx.fill();
+  const t=performance.now();if(t-last>100){last=t;measure()}}
+function finish(){done=true;document.getElementById('card').classList.add('show');cv.style.opacity='0';cv.style.pointerEvents='none';goldConfetti();setTimeout(()=>cv.remove(),950)}
 cv.addEventListener('pointerdown',e=>{drawing=true;cv.setPointerCapture(e.pointerId);scratch(e)});
 cv.addEventListener('pointermove',e=>{if(drawing)scratch(e)});
 cv.addEventListener('pointerup',()=>{drawing=false;measure()});
@@ -114,19 +124,22 @@ cv.addEventListener('pointercancel',()=>drawing=false);
 window.addEventListener('resize',()=>{if(!done&&!drawing)setup()});
 (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(setup);
 
-/* Gold confetti */
+/* Gold confetti — only around the photo */
 function goldConfetti(){
-  const c=document.getElementById('confetti'),x=c.getContext('2d'),r=c.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);
-  c.width=r.width*dpr;c.height=r.height*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+  const c=document.getElementById('confetti'),x=c.getContext('2d'),cr=c.getBoundingClientRect(),pr=document.getElementById('photo').getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);
+  c.width=cr.width*dpr;c.height=cr.height*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+  const cx=pr.left+pr.width/2-cr.left,cy=pr.top+pr.height/2-cr.top,pad=pr.width*.1;
   const gold=['#c9a24a','#d9b86a','#e7cf8f','#b98f2f','#f3e2ae','#a8812a'],P=[];
-  for(let i=0;i<180;i++){const a=Math.random()*Math.PI*2,v=Math.random()*5+1.5;
-    P.push({x:r.width/2,y:r.height*.45,vx:Math.cos(a)*v,vy:Math.sin(a)*v-2.2,w:Math.random()*5+3,rot:Math.random()*6.28,vr:(Math.random()-.5)*.3,ph:Math.random()*6.28,c:gold[i%6],round:i%4===0})}
+  for(let i=0;i<150;i++){const a=Math.random()*Math.PI*2,v=Math.random()*2.6+.6;
+    P.push({x:cx+Math.cos(a)*pr.width*.3*Math.random(),y:cy+Math.sin(a)*pr.height*.3*Math.random(),vx:Math.cos(a)*v,vy:Math.sin(a)*v-.8,w:Math.random()*4+2.5,rot:Math.random()*6.28,vr:(Math.random()-.5)*.3,ph:Math.random()*6.28,c:gold[i%6],round:i%4===0})}
   let t0=null;
-  (function f(t){if(!t0)t0=t;const p=Math.min(1,(t-t0)/4200);x.clearRect(0,0,r.width,r.height);
-    P.forEach(q=>{q.x+=q.vx;q.y+=q.vy;q.vx*=.985;q.vy=q.vy*.985+.07;q.rot+=q.vr;
+  (function f(t){if(!t0)t0=t;const p=Math.min(1,(t-t0)/3200);x.clearRect(0,0,cr.width,cr.height);
+    x.save();x.beginPath();x.rect(pr.left-cr.left-pad,pr.top-cr.top-pad,pr.width+2*pad,pr.height+2*pad);x.clip();
+    P.forEach(q=>{q.x+=q.vx;q.y+=q.vy;q.vx*=.97;q.vy=q.vy*.97+.045;q.rot+=q.vr;
       x.save();x.globalAlpha=Math.max(0,1-p*p)*(.65+.35*Math.sin(t/90+q.ph));x.translate(q.x,q.y);x.rotate(q.rot);x.fillStyle=q.c;
       if(q.round){x.beginPath();x.arc(0,0,q.w*.45,0,6.3);x.fill()}else x.fillRect(-q.w/2,-q.w*.4,q.w,q.w*.8);x.restore()});
-    if(p<1)requestAnimationFrame(f);else x.clearRect(0,0,r.width,r.height)})(performance.now());
+    x.restore();
+    if(p<1)requestAnimationFrame(f);else x.clearRect(0,0,cr.width,cr.height)})(performance.now());
 }
 </script>
 </body>
